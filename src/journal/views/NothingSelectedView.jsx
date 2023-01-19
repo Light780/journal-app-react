@@ -1,7 +1,16 @@
 import { StarOutline } from '@mui/icons-material'
 import { Grid, Typography } from '@mui/material'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
 export const NothingSelectedView = () => {
+  const { messageDeleted } = useSelector(state => state.journal)
+  useEffect(() => {
+    if (messageDeleted.length > 0) {
+      Swal.fire('Nota eliminada', messageDeleted, 'success')
+    }
+  }, [messageDeleted])
   return (
     <Grid
       className='animate__animated animate__fadeIn animate__faster'

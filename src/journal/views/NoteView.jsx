@@ -1,8 +1,21 @@
-import { SaveOutlined } from '@mui/icons-material'
-import { Button, Grid, TextField, Typography } from '@mui/material'
+import { DeleteOutlined, SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import { Button, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { useJournal } from '../../hooks'
 import { ImageGallery } from '../components/ImageGallery'
 
 export const NoteView = () => {
+  const {
+    body,
+    dateString,
+    fileInputRef,
+    imageUrls,
+    isSaving,
+    onDelete,
+    onFileInputChange,
+    onInputChange,
+    onSaveNote,
+    title
+  } = useJournal()
   return (
     <Grid
       container
@@ -11,11 +24,26 @@ export const NoteView = () => {
       className='animate__animated animate__fadeIn animate__faster'
     >
       <Grid item>
-        <Typography fontSize={39} fontWeight='light'>28 de agosto, 2023</Typography>
+        <Typography fontSize={39} fontWeight='light'>{dateString}</Typography>
       </Grid>
 
       <Grid item>
-        <Button color='primary' sx={{ padding: 2 }}>
+        <input
+          type='file'
+          ref={fileInputRef}
+          multiple
+          onChange={onFileInputChange}
+          style={{ display: 'none' }}
+        />
+        <IconButton
+          color='primary'
+          disabled={isSaving}
+          onClick={() => fileInputRef.current.click()}
+        >
+          <UploadOutlined />
+        </IconButton>
+
+        <Button disabled={isSaving} color='primary' sx={{ padding: 2 }} onClick={onSaveNote}>
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Guardar
         </Button>
@@ -24,6 +52,9 @@ export const NoteView = () => {
       <Grid container>
         <TextField
           type='text'
+          name='title'
+          value={title}
+          onChange={onInputChange}
           variant='filled'
           fullWidth
           placeholder='Ingrese un titulo'
@@ -33,6 +64,9 @@ export const NoteView = () => {
 
         <TextField
           type='text'
+          name='body'
+          value={body}
+          onChange={onInputChange}
           variant='filled'
           multiline
           fullWidth
@@ -41,7 +75,18 @@ export const NoteView = () => {
         />
       </Grid>
 
-      <ImageGallery />
+      <Grid container justifyContent='end'>
+        <Button
+          onClick={onDelete}
+          sx={{ mt: 2 }}
+          color='error'
+        >
+          <DeleteOutlined />
+          Borrar
+        </Button>
+      </Grid>
+
+      <ImageGallery images={imageUrls} />
 
     </Grid>
   )

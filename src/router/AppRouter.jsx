@@ -18,11 +18,6 @@ export const AppRouter = () => {
           : <Route path='/auth/*' element={<AuthRoutes />} />
       }
       <Route path='/*' element={<Navigate to='/auth/login' />} />
-      {/* Auth Routes */}
-      {/* <Route path='/auth/*' element={<AuthRoutes />} /> */}
-
-      {/* Journal Routes */}
-      {/* <Route path='/*' element={<JournalRoutes />} /> */}
     </Routes>
   )
 }

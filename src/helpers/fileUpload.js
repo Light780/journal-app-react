@@ -1,8 +1,10 @@
+import { getEnviroments } from './getEnviroments'
+
 export const fileUpload = async (file) => {
-  if (!file) throw new Error('No tenemos ningun archivo a subir')
+  if (!file) return null
 
-  const cloudUrl = import.meta.env.VITE_CLOUDINARY_URL
-
+  const env = getEnviroments()
+  const cloudUrl = env.VITE_CLOUDINARY_URL
   const formData = new FormData()
   formData.append('upload_preset', 'react-journal')
   formData.append('file', file)
@@ -13,11 +15,11 @@ export const fileUpload = async (file) => {
       body: formData
     })
 
-    if (!res.ok) throw new Error('No se pudo subir imagen')
+    if (!res.ok) return null
 
     const cloudResponse = await res.json()
     return cloudResponse.secure_url
   } catch (error) {
-    throw new Error(error.message)
+    return null
   }
 }

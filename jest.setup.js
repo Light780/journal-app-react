@@ -1,5 +1,6 @@
 import 'whatwg-fetch'
 import 'setImmediate'
+
 require('dotenv').config({
   path: '.env.test'
 })

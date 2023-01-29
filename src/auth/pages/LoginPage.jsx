@@ -25,13 +25,12 @@ export const LoginPage = () => {
   }
 
   const onGoogleSingIn = () => {
-    console.log('onGoogleSignIn')
     dispatch(startGoogleSignIn())
   }
 
   return (
     <AuthLayout title='Login'>
-      <form onSubmit={onSubmit} className='animate__animated animate__fadeIn animate__faster'>
+      <form aria-label='form' onSubmit={onSubmit} className='animate__animated animate__fadeIn animate__faster'>
         <Grid container>
 
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -69,7 +68,13 @@ export const LoginPage = () => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Button variant='contained' fullWidth onClick={onGoogleSingIn} disabled={isAuthenticating}>
+              <Button
+                variant='contained'
+                fullWidth
+                aria-label='google-btn'
+                onClick={onGoogleSingIn}
+                disabled={isAuthenticating}
+              >
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
               </Button>
